@@ -2,7 +2,11 @@
 import pyvis as pv 
 import networkx as nx 
 import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 from pyvis.network import Network
+
+## FUNCTIONS
 
 def add_edges_rey(graph, edges):
     """
@@ -30,6 +34,8 @@ def connect_edges(edges_list, graph, color):
     add_edges_rey(graph, connect_list)
 
 
+## DICTIONARIES AND DATA
+
 # creating storytellers colors
 storytellers = {
     "Panfilo" : "#9e0142",
@@ -44,6 +50,18 @@ storytellers = {
     "Pampinea" : "#5e4fa2"
 }
 
+# themes
+
+THEMES = ["Storytelling", "Cultural_Exchange", "Sexuality"]
+theme_dict = {}
+color_coding = {
+    "Storytelling" : "blue",
+    "Cultural_Exchange" : "green",
+    "Sexuality" : "red"
+}
+
+
+## ACTUAL STUFF
 # read in data and create graph
 df = pd.read_csv("decameron_themes.csv")
 main_graph = Network(directed = True)
@@ -55,18 +73,11 @@ for index, row in df.iterrows():
 
 
 # creating theme lists
-THEMES = ["Storytelling", "Cultural_Exchange", "Sexuality"]
-theme_dict = {}
-color_coding = {
-    "Storytelling" : "blue",
-    "Cultural_Exchange" : "green",
-    "Sexuality" : "red"
-}
 for theme in THEMES:
     theme_dict[theme] = df.loc[df[theme] == True]["Story_Hash"].tolist()
     connect_edges(theme_dict[theme], main_graph, color_coding[theme])
 
 
-
+## OK LETS SEE THIS
 main_graph.show_buttons()
 main_graph.show("hello.html")

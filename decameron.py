@@ -109,5 +109,5 @@ for theme in THEMES:
 
 ## OK LETS SEE THIS
 main_graph.barnes_hut(spring_length = 150)
-main_graph.show_buttons()
-main_graph.show("hello.html")
+#main_graph.show_buttons()
+main_graph.show("graph.html")

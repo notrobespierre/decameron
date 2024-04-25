@@ -3,8 +3,26 @@ import pyvis as pv
 import networkx as nx 
 import pandas as pd
 import requests
+import scipy
 from bs4 import BeautifulSoup
 from pyvis.network import Network
+
+import requests
+import os
+import re
+import numpy as np
+import gensim
+import gensim.corpora as corpora
+
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+
+from pprint import pprint
+from bs4 import BeautifulSoup
+from gensim.models import CoherenceModel
+from gensim.utils import simple_preprocess
+from gensim.models.ldamodel import LdaModel
 
 ## FUNCTIONS
 
@@ -33,6 +51,12 @@ def connect_edges(edges_list, graph, color):
     print(connect_list)
     add_edges_rey(graph, connect_list)
 
+def return_URL(day, story):
+    story = two_digit(story)
+    day = two_digit(day)
+    URL = f"https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov{day}{story}&lang=eng"
+    return URL
+
 
 ## DICTIONARIES AND DATA
 
@@ -52,12 +76,13 @@ storytellers = {
 
 # themes
 
-THEMES = ["Storytelling", "Cultural_Exchange", "Sexuality"]
+THEMES = ["Storytelling", "Cultural_Exchange", "Sexuality", "Gender_Bending"]
 theme_dict = {}
 color_coding = {
     "Storytelling" : "blue",
     "Cultural_Exchange" : "green",
-    "Sexuality" : "red"
+    "Sexuality" : "red",
+    "Gender_Bending": "purple"
 }
 
 
@@ -68,8 +93,12 @@ main_graph = Network(directed = True)
 main_graph.set_edge_smooth("dynamic")
 
 for index, row in df.iterrows():
-    #TODO: add color in here based on storyteller
+
+    # this adds nodes to the graphs of each of the storytellers
     main_graph.add_node(row["Story_Hash"], label = f"Day {row["Day"]}, Story {row["Story"]}", color = storytellers[row["Storyteller"]])
+    
+    # TODO main_graph[row[""]= 
+    #
 
 
 # creating theme lists
@@ -79,5 +108,6 @@ for theme in THEMES:
 
 
 ## OK LETS SEE THIS
+main_graph.barnes_hut(spring_length = 150)
 main_graph.show_buttons()
 main_graph.show("hello.html")

@@ -43,13 +43,26 @@
              
 
              
-             #config {
-                 float: left;
-                 width: 400px;
-                 height: 600px;
-             }
-             
 
+             
+             /* position absolute is important and the container has to be relative or absolute as well. */
+          div.popup {
+                 position:absolute;
+                 top:0px;
+                 left:0px;
+                 display:none;
+                 background-color:#f5f4ed;
+                 -moz-border-radius: 3px;
+                 -webkit-border-radius: 3px;
+                 border-radius: 3px;
+                 border: 1px solid #808074;
+                 box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+          }
+
+          /* hide the original tooltip */
+          .vis-tooltip {
+            display:none;
+          }
              
         </style>
     </head>
@@ -63,8 +76,6 @@
         </div>
 
         
-        
-            <div id="config"></div>
         
 
         <script type="text/javascript">
@@ -96,8 +107,8 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#9e0142", "id": 1, "label": "Day 1, Story 1", "shape": "dot"}, {"color": "#f46d43", "id": 3, "label": "Day 1, Story 3", "shape": "dot"}, {"color": "#fdae61", "id": 30, "label": "Day 3, Story 10", "shape": "dot"}]);
-                  edges = new vis.DataSet([{"arrows": "hi", "color": "blue", "from": 30, "to": 1}, {"arrows": "hi", "color": "green", "from": 30, "to": 3}, {"arrows": "hi", "color": "red", "from": 30, "to": 3}]);
+                  nodes = new vis.DataSet([{"color": "#9e0142", "id": 1, "label": "Day 1, Story 1", "shape": "dot", "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0101\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "id": 3, "label": "Day 1, Story 3", "shape": "dot", "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0103\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fdae61", "id": 30, "label": "Day 3, Story 10", "shape": "dot", "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0310\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#9e0142", "id": 17, "label": "Day 2, Story 7", "shape": "dot", "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0207\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "id": 19, "label": "Day 2, Story 9", "shape": "dot", "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0209\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "id": 26, "label": "Day 3, Story 6", "shape": "dot", "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0306\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}]);
+                  edges = new vis.DataSet([{"arrows": "hi", "color": "blue", "from": 30, "to": 1}, {"arrows": "hi", "color": "blue", "from": 30, "to": 17}, {"arrows": "hi", "color": "blue", "from": 30, "to": 19}, {"arrows": "hi", "color": "blue", "from": 30, "to": 26}, {"arrows": "hi", "color": "blue", "from": 17, "to": 1}, {"arrows": "hi", "color": "blue", "from": 19, "to": 1}, {"arrows": "hi", "color": "blue", "from": 19, "to": 17}, {"arrows": "hi", "color": "blue", "from": 26, "to": 1}, {"arrows": "hi", "color": "blue", "from": 26, "to": 17}, {"arrows": "hi", "color": "blue", "from": 26, "to": 19}, {"arrows": "hi", "color": "green", "from": 30, "to": 3}, {"arrows": "hi", "color": "green", "from": 30, "to": 17}, {"arrows": "hi", "color": "green", "from": 30, "to": 19}, {"arrows": "hi", "color": "green", "from": 17, "to": 3}, {"arrows": "hi", "color": "green", "from": 19, "to": 3}, {"arrows": "hi", "color": "green", "from": 19, "to": 17}, {"arrows": "hi", "color": "red", "from": 30, "to": 17}, {"arrows": "hi", "color": "red", "from": 30, "to": 26}, {"arrows": "hi", "color": "red", "from": 26, "to": 17}]);
 
                   nodeColors = {};
                   allNodes = nodes.get({ returnType: "Object" });
@@ -110,7 +121,7 @@
 
                   var options = {
     "configure": {
-        "enabled": true
+        "enabled": false
     },
     "edges": {
         "color": {
@@ -127,6 +138,14 @@
         "hideNodesOnDrag": false
     },
     "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 150
+        },
         "enabled": true,
         "stabilization": {
             "enabled": true,
@@ -142,10 +161,6 @@
 
 
                   
-                  // if this network requires displaying the configure window,
-                  // put it in its div
-                  options.configure["container"] = document.getElementById("config");
-                  
 
                   network = new vis.Network(container, data, options);
 
@@ -153,6 +168,68 @@
 
                   
 
+                  
+                  // make a custom popup
+                      var popup = document.createElement("div");
+                      popup.className = 'popup';
+                      popupTimeout = null;
+                      popup.addEventListener('mouseover', function () {
+                          console.log(popup)
+                          if (popupTimeout !== null) {
+                              clearTimeout(popupTimeout);
+                              popupTimeout = null;
+                          }
+                      });
+                      popup.addEventListener('mouseout', function () {
+                          if (popupTimeout === null) {
+                              hidePopup();
+                          }
+                      });
+                      container.appendChild(popup);
+
+
+                      // use the popup event to show
+                      network.on("showPopup", function (params) {
+                          showPopup(params);
+                      });
+
+                      // use the hide event to hide it
+                      network.on("hidePopup", function (params) {
+                          hidePopup();
+                      });
+
+                      // hiding the popup through css
+                      function hidePopup() {
+                          popupTimeout = setTimeout(function () { popup.style.display = 'none'; }, 500);
+                      }
+
+                      // showing the popup
+                      function showPopup(nodeId) {
+                          // get the data from the vis.DataSet
+                          var nodeData = nodes.get([nodeId]);
+                          popup.innerHTML = nodeData[0].title;
+
+                          // get the position of the node
+                          var posCanvas = network.getPositions([nodeId])[nodeId];
+
+                          // get the bounding box of the node
+                          var boundingBox = network.getBoundingBox(nodeId);
+
+                          //position tooltip:
+                          posCanvas.x = posCanvas.x + 0.5 * (boundingBox.right - boundingBox.left);
+
+                          // convert coordinates to the DOM space
+                          var posDOM = network.canvasToDOM(posCanvas);
+
+                          // Give it an offset
+                          posDOM.x += 10;
+                          posDOM.y -= 20;
+
+                          // show and place the tooltip.
+                          popup.style.display = 'block';
+                          popup.style.top = posDOM.y + 'px';
+                          popup.style.left = posDOM.x + 'px';
+                      }
                   
 
 

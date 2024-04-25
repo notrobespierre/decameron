@@ -63,12 +63,17 @@
           .vis-tooltip {
             display:none;
           }
+
+          .btn {
+            background-color: #e76f51;
+          }
              
         </style>
     </head>
 
 
     <body>
+        <div style = "margin:30px">
         <div>
             <h1> Decameron Data </h1>
         </div>
@@ -79,6 +84,27 @@
         </div>
 
         <div>
+            <p>Here, the colors of nodes represent the storytellers of the Decameron, and the lines between them show themes that are shared between them.</p>
+            <p>Storyteller color key:</p>
+            <b style="border-right:18px solid #9e0142; margin-left: 50px"></b>Panfilo
+            <b style="border-right:18px solid #d53e4f;"></b>Neifile
+            <b style="border-right:18px solid #f46d43;"></b>Filomena
+            <b style="border-right:18px solid #fdae61;"></b>Dioneo
+            <b style="border-right:18px solid #fee08b;"></b>Fiametta
+            <b style="border-right:18px solid #e6f598;"></b>Emilia
+            <b style="border-right:18px solid #abdda4;"></b>Filostrato
+            <b style="border-right:18px solid #66c2a5;"></b>Lauretta
+            <b style="border-right:18px solid #3288bd;"></b>Elissa
+            <b style="border-right:18px solid #5e4fa2;"></b>Pampinea
+            
+            <p>Theme color key:</p>
+            <b style="border-right:18px solid #264653; margin-left: 50px"></b>Storytelling
+            <b style="border-right:18px solid #2a9d8f;"></b>Cultural Exchange
+            <b style="border-right:18px solid #8ab17d;"></b>Elissa
+            <b style="border-right:18px solid #e9c46a;"></b>Sexuality
+            <b style="border-right:18px solid #f4a261;"></b>Queerness
+            <b style="border-right:18px solid #e76f51;"></b>Priests Gone Wild
+
             <p>Click on nodes for links to the stories!</p>
         </div>
 
@@ -93,165 +119,166 @@
 
         <script type="text/javascript">
 
-              // initialize global variables.
-              var edges;
-              var nodes;
-              var allNodes;
-              var allEdges;
-              var nodeColors;
-              var originalNodes;
-              var network;
-              var container;
-              var options, data;
-              var filter = {
-                  item : '',
-                  property : '',
-                  value : []
-              };
+            // initialize global variables.
+            var edges;
+            var nodes;
+            var allNodes;
+            var allEdges;
+            var nodeColors;
+            var originalNodes;
+            var network;
+            var container;
+            var options, data;
+            var filter = {
+                item : '',
+                property : '',
+                value : []
+            };
 
-              
+            
 
-              
+            
 
-              // This method is responsible for drawing the graph, returns the drawn network
-              function drawGraph() {
-                  var container = document.getElementById('mynetwork');
+            // This method is responsible for drawing the graph, returns the drawn network
+            function drawGraph() {
+                var container = document.getElementById('mynetwork');
 
-                  
+                
 
-                  // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#9e0142", "font": 100, "id": 1, "label": "Day 1, Story 1", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0101\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "font": 100, "id": 3, "label": "Day 1, Story 3", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0103\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fdae61", "font": 100, "id": 30, "label": "Day 3, Story 10", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0310\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#9e0142", "font": 100, "id": 17, "label": "Day 2, Story 7", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0207\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "font": 100, "id": 19, "label": "Day 2, Story 9", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0209\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "font": 100, "id": 26, "label": "Day 3, Story 6", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0306\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#5e4fa2", "font": 100, "id": 32, "label": "Day 4, Story 2", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0402\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#5e4fa2", "font": 100, "id": 13, "label": "Day 2, Story 3", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0203\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fdae61", "font": 100, "id": 50, "label": "Day 5, Story 10", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0510\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#abdda4", "font": 100, "id": 21, "label": "Day 3, Story 1", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0301\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#3288bd", "font": 100, "id": 63, "label": "Day 7, Story 3", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0703\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#e6f598", "font": 100, "id": 67, "label": "Day 7, Story 7", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0707\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "font": 100, "id": 51, "label": "Day 6, Story 1", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0601\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#d53e4f", "font": 100, "id": 68, "label": "Day 7, Story 8", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0708\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#66c2a5", "font": 100, "id": 64, "label": "Day 7, Story 4", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0704\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "font": 100, "id": 78, "label": "Day 8, Story 8", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0808\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "font": 100, "id": 5, "label": "Day 1, Story 5", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0105\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}]);
-                  edges = new vis.DataSet([{"arrows": "hi", "color": "blue", "from": 32, "to": 63}, {"arrows": "hi", "color": "blue", "from": 32, "to": 78}, {"arrows": "hi", "color": "blue", "from": 32, "to": 64}, {"arrows": "hi", "color": "blue", "from": 32, "to": 51}, {"arrows": "hi", "color": "blue", "from": 32, "to": 68}, {"arrows": "hi", "color": "blue", "from": 26, "to": 32}, {"arrows": "hi", "color": "blue", "from": 26, "to": 63}, {"arrows": "hi", "color": "blue", "from": 26, "to": 78}, {"arrows": "hi", "color": "blue", "from": 26, "to": 64}, {"arrows": "hi", "color": "blue", "from": 26, "to": 51}, {"arrows": "hi", "color": "blue", "from": 26, "to": 68}, {"arrows": "hi", "color": "blue", "from": 63, "to": 78}, {"arrows": "hi", "color": "blue", "from": 63, "to": 64}, {"arrows": "hi", "color": "blue", "from": 63, "to": 68}, {"arrows": "hi", "color": "blue", "from": 64, "to": 78}, {"arrows": "hi", "color": "blue", "from": 64, "to": 68}, {"arrows": "hi", "color": "blue", "from": 51, "to": 63}, {"arrows": "hi", "color": "blue", "from": 51, "to": 78}, {"arrows": "hi", "color": "blue", "from": 51, "to": 64}, {"arrows": "hi", "color": "blue", "from": 51, "to": 68}, {"arrows": "hi", "color": "blue", "from": 68, "to": 78}, {"arrows": "hi", "color": "green", "from": 3, "to": 30}, {"arrows": "hi", "color": "green", "from": 3, "to": 17}, {"arrows": "hi", "color": "green", "from": 3, "to": 19}, {"arrows": "hi", "color": "green", "from": 17, "to": 30}, {"arrows": "hi", "color": "green", "from": 17, "to": 19}, {"arrows": "hi", "color": "green", "from": 19, "to": 30}, {"arrows": "hi", "color": "red", "from": 50, "to": 63}, {"arrows": "hi", "color": "red", "from": 50, "to": 78}, {"arrows": "hi", "color": "red", "from": 30, "to": 50}, {"arrows": "hi", "color": "red", "from": 30, "to": 63}, {"arrows": "hi", "color": "red", "from": 30, "to": 78}, {"arrows": "hi", "color": "red", "from": 17, "to": 50}, {"arrows": "hi", "color": "red", "from": 17, "to": 30}, {"arrows": "hi", "color": "red", "from": 17, "to": 63}, {"arrows": "hi", "color": "red", "from": 17, "to": 78}, {"arrows": "hi", "color": "red", "from": 17, "to": 26}, {"arrows": "hi", "color": "red", "from": 13, "to": 50}, {"arrows": "hi", "color": "red", "from": 13, "to": 30}, {"arrows": "hi", "color": "red", "from": 13, "to": 17}, {"arrows": "hi", "color": "red", "from": 13, "to": 63}, {"arrows": "hi", "color": "red", "from": 13, "to": 78}, {"arrows": "hi", "color": "red", "from": 13, "to": 26}, {"arrows": "hi", "color": "red", "from": 63, "to": 78}, {"arrows": "hi", "color": "red", "from": 26, "to": 50}, {"arrows": "hi", "color": "red", "from": 26, "to": 30}, {"arrows": "hi", "color": "red", "from": 26, "to": 63}, {"arrows": "hi", "color": "red", "from": 26, "to": 78}, {"arrows": "hi", "color": "purple", "from": 19, "to": 50}, {"arrows": "hi", "color": "purple", "from": 13, "to": 19}, {"arrows": "hi", "color": "purple", "from": 13, "to": 50}, {"arrows": "hi", "color": "orange", "from": 30, "to": 67}, {"arrows": "hi", "color": "orange", "from": 30, "to": 64}, {"arrows": "hi", "color": "orange", "from": 17, "to": 30}, {"arrows": "hi", "color": "orange", "from": 17, "to": 19}, {"arrows": "hi", "color": "orange", "from": 17, "to": 21}, {"arrows": "hi", "color": "orange", "from": 17, "to": 67}, {"arrows": "hi", "color": "orange", "from": 17, "to": 64}, {"arrows": "hi", "color": "orange", "from": 19, "to": 30}, {"arrows": "hi", "color": "orange", "from": 19, "to": 21}, {"arrows": "hi", "color": "orange", "from": 19, "to": 67}, {"arrows": "hi", "color": "orange", "from": 19, "to": 64}, {"arrows": "hi", "color": "orange", "from": 13, "to": 30}, {"arrows": "hi", "color": "orange", "from": 13, "to": 17}, {"arrows": "hi", "color": "orange", "from": 13, "to": 19}, {"arrows": "hi", "color": "orange", "from": 13, "to": 21}, {"arrows": "hi", "color": "orange", "from": 13, "to": 67}, {"arrows": "hi", "color": "orange", "from": 13, "to": 64}, {"arrows": "hi", "color": "orange", "from": 21, "to": 30}, {"arrows": "hi", "color": "orange", "from": 21, "to": 67}, {"arrows": "hi", "color": "orange", "from": 21, "to": 64}, {"arrows": "hi", "color": "orange", "from": 64, "to": 67}, {"arrows": "hi", "color": "orange", "from": 5, "to": 30}, {"arrows": "hi", "color": "orange", "from": 5, "to": 17}, {"arrows": "hi", "color": "orange", "from": 5, "to": 19}, {"arrows": "hi", "color": "orange", "from": 5, "to": 13}, {"arrows": "hi", "color": "orange", "from": 5, "to": 21}, {"arrows": "hi", "color": "orange", "from": 5, "to": 67}, {"arrows": "hi", "color": "orange", "from": 5, "to": 64}, {"arrows": "hi", "color": "pink", "from": 1, "to": 30}, {"arrows": "hi", "color": "pink", "from": 1, "to": 32}, {"arrows": "hi", "color": "pink", "from": 1, "to": 21}, {"arrows": "hi", "color": "pink", "from": 30, "to": 32}, {"arrows": "hi", "color": "pink", "from": 21, "to": 30}, {"arrows": "hi", "color": "pink", "from": 21, "to": 32}]);
+                // parsing and collecting nodes and edges from the python
+                nodes = new vis.DataSet([{"color": "#9e0142", "font": 100, "id": 1, "label": "Day 1, Story 1", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0101\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "font": 100, "id": 3, "label": "Day 1, Story 3", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0103\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fdae61", "font": 100, "id": 30, "label": "Day 3, Story 10", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0310\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#9e0142", "font": 100, "id": 17, "label": "Day 2, Story 7", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0207\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "font": 100, "id": 19, "label": "Day 2, Story 9", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0209\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "font": 100, "id": 26, "label": "Day 3, Story 6", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0306\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#5e4fa2", "font": 100, "id": 32, "label": "Day 4, Story 2", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0402\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#5e4fa2", "font": 100, "id": 13, "label": "Day 2, Story 3", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0203\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fdae61", "font": 100, "id": 50, "label": "Day 5, Story 10", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0510\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#abdda4", "font": 100, "id": 21, "label": "Day 3, Story 1", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0301\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#3288bd", "font": 100, "id": 63, "label": "Day 7, Story 3", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0703\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#e6f598", "font": 100, "id": 67, "label": "Day 7, Story 7", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0707\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#f46d43", "font": 100, "id": 51, "label": "Day 6, Story 1", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0601\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#d53e4f", "font": 100, "id": 68, "label": "Day 7, Story 8", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0708\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#66c2a5", "font": 100, "id": 64, "label": "Day 7, Story 4", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0704\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "font": 100, "id": 78, "label": "Day 8, Story 8", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0808\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}, {"color": "#fee08b", "font": 100, "id": 5, "label": "Day 1, Story 5", "shape": "dot", "size": 30, "title": "\u003ca href=\u0027https://www.brown.edu/Departments/Italian_Studies/dweb/texts/DecShowText.php?myID=nov0105\u0026lang=eng\u0027\u003eRead Story\u003c/a\u003e"}]);
+                edges = new vis.DataSet([{"arrows": "hi", "color": "blue", "from": 32, "to": 63}, {"arrows": "hi", "color": "blue", "from": 32, "to": 78}, {"arrows": "hi", "color": "blue", "from": 32, "to": 64}, {"arrows": "hi", "color": "blue", "from": 32, "to": 51}, {"arrows": "hi", "color": "blue", "from": 32, "to": 68}, {"arrows": "hi", "color": "blue", "from": 26, "to": 32}, {"arrows": "hi", "color": "blue", "from": 26, "to": 63}, {"arrows": "hi", "color": "blue", "from": 26, "to": 78}, {"arrows": "hi", "color": "blue", "from": 26, "to": 64}, {"arrows": "hi", "color": "blue", "from": 26, "to": 51}, {"arrows": "hi", "color": "blue", "from": 26, "to": 68}, {"arrows": "hi", "color": "blue", "from": 63, "to": 78}, {"arrows": "hi", "color": "blue", "from": 63, "to": 64}, {"arrows": "hi", "color": "blue", "from": 63, "to": 68}, {"arrows": "hi", "color": "blue", "from": 64, "to": 78}, {"arrows": "hi", "color": "blue", "from": 64, "to": 68}, {"arrows": "hi", "color": "blue", "from": 51, "to": 63}, {"arrows": "hi", "color": "blue", "from": 51, "to": 78}, {"arrows": "hi", "color": "blue", "from": 51, "to": 64}, {"arrows": "hi", "color": "blue", "from": 51, "to": 68}, {"arrows": "hi", "color": "blue", "from": 68, "to": 78}, {"arrows": "hi", "color": "green", "from": 3, "to": 30}, {"arrows": "hi", "color": "green", "from": 3, "to": 17}, {"arrows": "hi", "color": "green", "from": 3, "to": 19}, {"arrows": "hi", "color": "green", "from": 17, "to": 30}, {"arrows": "hi", "color": "green", "from": 17, "to": 19}, {"arrows": "hi", "color": "green", "from": 19, "to": 30}, {"arrows": "hi", "color": "red", "from": 50, "to": 63}, {"arrows": "hi", "color": "red", "from": 50, "to": 78}, {"arrows": "hi", "color": "red", "from": 30, "to": 50}, {"arrows": "hi", "color": "red", "from": 30, "to": 63}, {"arrows": "hi", "color": "red", "from": 30, "to": 78}, {"arrows": "hi", "color": "red", "from": 17, "to": 50}, {"arrows": "hi", "color": "red", "from": 17, "to": 30}, {"arrows": "hi", "color": "red", "from": 17, "to": 63}, {"arrows": "hi", "color": "red", "from": 17, "to": 78}, {"arrows": "hi", "color": "red", "from": 17, "to": 26}, {"arrows": "hi", "color": "red", "from": 13, "to": 50}, {"arrows": "hi", "color": "red", "from": 13, "to": 30}, {"arrows": "hi", "color": "red", "from": 13, "to": 17}, {"arrows": "hi", "color": "red", "from": 13, "to": 63}, {"arrows": "hi", "color": "red", "from": 13, "to": 78}, {"arrows": "hi", "color": "red", "from": 13, "to": 26}, {"arrows": "hi", "color": "red", "from": 63, "to": 78}, {"arrows": "hi", "color": "red", "from": 26, "to": 50}, {"arrows": "hi", "color": "red", "from": 26, "to": 30}, {"arrows": "hi", "color": "red", "from": 26, "to": 63}, {"arrows": "hi", "color": "red", "from": 26, "to": 78}, {"arrows": "hi", "color": "purple", "from": 19, "to": 50}, {"arrows": "hi", "color": "purple", "from": 13, "to": 19}, {"arrows": "hi", "color": "purple", "from": 13, "to": 50}, {"arrows": "hi", "color": "orange", "from": 30, "to": 67}, {"arrows": "hi", "color": "orange", "from": 30, "to": 64}, {"arrows": "hi", "color": "orange", "from": 17, "to": 30}, {"arrows": "hi", "color": "orange", "from": 17, "to": 19}, {"arrows": "hi", "color": "orange", "from": 17, "to": 21}, {"arrows": "hi", "color": "orange", "from": 17, "to": 67}, {"arrows": "hi", "color": "orange", "from": 17, "to": 64}, {"arrows": "hi", "color": "orange", "from": 19, "to": 30}, {"arrows": "hi", "color": "orange", "from": 19, "to": 21}, {"arrows": "hi", "color": "orange", "from": 19, "to": 67}, {"arrows": "hi", "color": "orange", "from": 19, "to": 64}, {"arrows": "hi", "color": "orange", "from": 13, "to": 30}, {"arrows": "hi", "color": "orange", "from": 13, "to": 17}, {"arrows": "hi", "color": "orange", "from": 13, "to": 19}, {"arrows": "hi", "color": "orange", "from": 13, "to": 21}, {"arrows": "hi", "color": "orange", "from": 13, "to": 67}, {"arrows": "hi", "color": "orange", "from": 13, "to": 64}, {"arrows": "hi", "color": "orange", "from": 21, "to": 30}, {"arrows": "hi", "color": "orange", "from": 21, "to": 67}, {"arrows": "hi", "color": "orange", "from": 21, "to": 64}, {"arrows": "hi", "color": "orange", "from": 64, "to": 67}, {"arrows": "hi", "color": "orange", "from": 5, "to": 30}, {"arrows": "hi", "color": "orange", "from": 5, "to": 17}, {"arrows": "hi", "color": "orange", "from": 5, "to": 19}, {"arrows": "hi", "color": "orange", "from": 5, "to": 13}, {"arrows": "hi", "color": "orange", "from": 5, "to": 21}, {"arrows": "hi", "color": "orange", "from": 5, "to": 67}, {"arrows": "hi", "color": "orange", "from": 5, "to": 64}, {"arrows": "hi", "color": "pink", "from": 1, "to": 30}, {"arrows": "hi", "color": "pink", "from": 1, "to": 32}, {"arrows": "hi", "color": "pink", "from": 1, "to": 21}, {"arrows": "hi", "color": "pink", "from": 30, "to": 32}, {"arrows": "hi", "color": "pink", "from": 21, "to": 30}, {"arrows": "hi", "color": "pink", "from": 21, "to": 32}]);
 
-                  nodeColors = {};
-                  allNodes = nodes.get({ returnType: "Object" });
-                  for (nodeId in allNodes) {
-                    nodeColors[nodeId] = allNodes[nodeId].color;
-                  }
-                  allEdges = edges.get({ returnType: "Object" });
-                  // adding nodes and edges to the graph
-                  data = {nodes: nodes, edges: edges};
+                nodeColors = {};
+                allNodes = nodes.get({ returnType: "Object" });
+                for (nodeId in allNodes) {
+                  nodeColors[nodeId] = allNodes[nodeId].color;
+                }
+                allEdges = edges.get({ returnType: "Object" });
+                // adding nodes and edges to the graph
+                data = {nodes: nodes, edges: edges};
 
-                  var options = {
-    "configure": {
-        "enabled": false
-    },
-    "edges": {
-        "color": {
-            "inherit": true
-        },
-        "smooth": {
-            "enabled": true,
-            "type": "dynamic"
-        }
-    },
-    "interaction": {
-        "dragNodes": true,
-        "hideEdgesOnDrag": false,
-        "hideNodesOnDrag": false
-    },
-    "physics": {
-        "barnesHut": {
-            "avoidOverlap": 0,
-            "centralGravity": 0.3,
-            "damping": 0.09,
-            "gravitationalConstant": -80000,
-            "springConstant": 0.15,
-            "springLength": 1
-        },
-        "enabled": true,
-        "stabilization": {
-            "enabled": true,
-            "fit": true,
-            "iterations": 1000,
-            "onlyDynamicEdges": false,
-            "updateInterval": 50
-        }
-    }
+                var options = {
+  "configure": {
+      "enabled": false
+  },
+  "edges": {
+      "color": {
+          "inherit": true
+      },
+      "smooth": {
+          "enabled": true,
+          "type": "dynamic"
+      }
+  },
+  "interaction": {
+      "dragNodes": true,
+      "hideEdgesOnDrag": false,
+      "hideNodesOnDrag": false
+  },
+  "physics": {
+      "barnesHut": {
+          "avoidOverlap": 0,
+          "centralGravity": 0.3,
+          "damping": 0.09,
+          "gravitationalConstant": -80000,
+          "springConstant": 0.15,
+          "springLength": 1
+      },
+      "enabled": true,
+      "stabilization": {
+          "enabled": true,
+          "fit": true,
+          "iterations": 1000,
+          "onlyDynamicEdges": false,
+          "updateInterval": 50
+      }
+  }
 };
 
-                  
+                
 
 
-                  
+                
 
-                  network = new vis.Network(container, data, options);
+                network = new vis.Network(container, data, options);
 
-                  
+                
 
-                  
+                
 
-                  
-                  // make a custom popup
-                      var popup = document.createElement("div");
-                      popup.className = 'popup';
-                      popupTimeout = null;
-                      popup.addEventListener('mouseover', function () {
-                          console.log(popup)
-                          if (popupTimeout !== null) {
-                              clearTimeout(popupTimeout);
-                              popupTimeout = null;
-                          }
-                      });
-                      popup.addEventListener('mouseout', function () {
-                          if (popupTimeout === null) {
-                              hidePopup();
-                          }
-                      });
-                      container.appendChild(popup);
-
-
-                      // use the popup event to show
-                      network.on("showPopup", function (params) {
-                          showPopup(params);
-                      });
-
-                      // use the hide event to hide it
-                      network.on("hidePopup", function (params) {
-                          hidePopup();
-                      });
-
-                      // hiding the popup through css
-                      function hidePopup() {
-                          popupTimeout = setTimeout(function () { popup.style.display = 'none'; }, 500);
-                      }
-
-                      // showing the popup
-                      function showPopup(nodeId) {
-                          // get the data from the vis.DataSet
-                          var nodeData = nodes.get([nodeId]);
-                          popup.innerHTML = nodeData[0].title;
-
-                          // get the position of the node
-                          var posCanvas = network.getPositions([nodeId])[nodeId];
-
-                          // get the bounding box of the node
-                          var boundingBox = network.getBoundingBox(nodeId);
-
-                          //position tooltip:
-                          posCanvas.x = posCanvas.x + 0.5 * (boundingBox.right - boundingBox.left);
-
-                          // convert coordinates to the DOM space
-                          var posDOM = network.canvasToDOM(posCanvas);
-
-                          // Give it an offset
-                          posDOM.x += 10;
-                          posDOM.y -= 20;
-
-                          // show and place the tooltip.
-                          popup.style.display = 'block';
-                          popup.style.top = posDOM.y + 'px';
-                          popup.style.left = posDOM.x + 'px';
-                      }
-                  
+                
+                // make a custom popup
+                    var popup = document.createElement("div");
+                    popup.className = 'popup';
+                    popupTimeout = null;
+                    popup.addEventListener('mouseover', function () {
+                        console.log(popup)
+                        if (popupTimeout !== null) {
+                            clearTimeout(popupTimeout);
+                            popupTimeout = null;
+                        }
+                    });
+                    popup.addEventListener('mouseout', function () {
+                        if (popupTimeout === null) {
+                            hidePopup();
+                        }
+                    });
+                    container.appendChild(popup);
 
 
-                  
+                    // use the popup event to show
+                    network.on("showPopup", function (params) {
+                        showPopup(params);
+                    });
 
-                  return network;
+                    // use the hide event to hide it
+                    network.on("hidePopup", function (params) {
+                        hidePopup();
+                    });
 
-              }
-              drawGraph();
-        </script>
-    </body>
+                    // hiding the popup through css
+                    function hidePopup() {
+                        popupTimeout = setTimeout(function () { popup.style.display = 'none'; }, 500);
+                    }
+
+                    // showing the popup
+                    function showPopup(nodeId) {
+                        // get the data from the vis.DataSet
+                        var nodeData = nodes.get([nodeId]);
+                        popup.innerHTML = nodeData[0].title;
+
+                        // get the position of the node
+                        var posCanvas = network.getPositions([nodeId])[nodeId];
+
+                        // get the bounding box of the node
+                        var boundingBox = network.getBoundingBox(nodeId);
+
+                        //position tooltip:
+                        posCanvas.x = posCanvas.x + 0.5 * (boundingBox.right - boundingBox.left);
+
+                        // convert coordinates to the DOM space
+                        var posDOM = network.canvasToDOM(posCanvas);
+
+                        // Give it an offset
+                        posDOM.x += 10;
+                        posDOM.y -= 20;
+
+                        // show and place the tooltip.
+                        popup.style.display = 'block';
+                        popup.style.top = posDOM.y + 'px';
+                        popup.style.left = posDOM.x + 'px';
+                    }
+                
+
+
+                
+
+                return network;
+
+            }
+            drawGraph();
+      </script>
+      </div>
+  </body>
 </html>

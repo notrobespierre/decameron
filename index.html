@@ -77,9 +77,21 @@
     <a class="btn" href="sentiment.html"> Sentiment Analysis </a>
 </div>
 
-<div>
-    <p>there isn't anything on this homepage sorry...</p>
-    <p></p>
-    <p></p>
+<div style = "margin-top:30px">
+    <p>For my Decameron project, I decided to try to look at how the stories of the Decameron related to each other, and to investigate this I used a variety of computational tools, focusing on two main aspects: Sentiment Analysis and Graphing.</p>
+    
+    <p><b>Things that failed and things to revisit</b></p>
+    
+    <p>Meaningful data analysis in a short time frame is a bit difficult. One of the first analyses I ran was a Latent Dirichlet Analysis (LDA), with the intent of bringing out common topics and maybe relating them to the people who were speaking.</p>
+    <p>One limitation of my graph is that it is binarized (there either is or is not a connection), and that many of these themes were selected manually. Right now, every story marked with a theme is connected to every other story marked with that theme, which looks nicely cluttered for the amount of stories I selected, but would look unruly for all 100 stories. In the future, finding specific things that connect stories to reduce the number of connections per node would be a goal. </p>
+    <p>In the future for the graph, I was thinking of measuring the commonality of a set of words, such as [“woman”, “girl”, “lady”] and measuring the frequency of those words within stories to attempt to find themes that way. I did attempt this, but I was getting issues with the WordNet package, which I was using to get similar words. It would probably be a challenge to get more specific themes, but could provide an interesting measure of how much certain topics are discussed, and give a measure of how prevalent a theme could be in a certain text, and this could possibly add line weights to the graph rather than making them binarized in the way they are now. </p>
+    <p>Another analysis I think would be interesting is measuring similarity between stories using NLP to see if any other interesting connections arise and if storytellers had similar stories.
+      </p>
+
+      <p><b>Packages and Sources</b></p>
+      <p>The story and translations I used were from the <a href = "https://www.brown.edu/Departments/Italian_Studies/dweb/">Decameron Web</a> project. <br> <a href = "https://bennett-holiday.medium.com/a-step-by-step-guide-to-writing-an-lda-program-in-python-690aa99119ea">This</a> post helped me with scraping the stories
+      <br>For Sentiment Analysis, I used <a href ="https://textblob.readthedocs.io/en/dev/">Text Blob</a>
+      <br>For my graph, I used <a href = "https://pyvis.readthedocs.io/en/latest/index.html">PyVis</a></p>
   </div>
+  
 </div>

@@ -81,12 +81,21 @@
         </div>
 
     <!-- end of header-->
-    <div style = "margin:20px">
-        <h2>Sentiment for Each Story</h2>
+    <div style = "margin-top:20px">
+        <h2>Sentiment Analysis</h2>
+        <p>Following the creation of the graph, I decided to try to scrape the stories off of the Decameron website and do an automated analysis. For this, I used Sentiment Analysis, which tries to measure the emotional tone of text. For example, “everything sucks and we’re all going to die” would have a negative sentiment, while “I love my friends, they make me so happy!” would have a more positive sentiment. I ran the analysis on all of the stories, and then stuck them into a handy heat map so it’s easier to refer to. Some things that surprised me were:
+          <ul>
+            <li> Day 4 was actually not super negative compared to the other Days. The most negative day ended up being Day 2. The most positive was Day 10.</li>
+            <li>The most negative story ended up being Day 1, Story 9, which also is the only story with a negative score in sentiment. This story was told by Elissa. The most negative storyteller overall was Filostrato (as expected), and the most positive was Panfilo. </li>
+            <li>Almost the entire Decameron had a positive valence, which means perhaps Boccaccio succeeded in his goal of creating something positive.
+            </li>
+          </ul>
+        </p>
+        <p><b>Heatmap of Sentiment by Day and Story</b></p>
         <img src="full_sentiments.png" alt="Sentiment by Day and Story" width = 50%>
     </div>
     <div style = "margin:20px">
-        <h2>Sentiment by Storyteller</h2>
+      <p><b>Sentiment for the 10 stories from each storyteller</b></p>
         <img src="storytellersent.png" alt="Sentiment of Each Storyteller" width = 60%>
     </div>
     </div>

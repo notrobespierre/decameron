@@ -71,6 +71,10 @@
           b {
             margin:10px
           }
+
+          .notkey {
+            margin:0px
+          }
              
         </style>
     </head>
@@ -87,8 +91,8 @@
             <a class="btn" href="sentiment.html"> Sentiment Analysis </a>
         </div>
 
-        <div>
-            <p>Here, the colors of nodes represent the storytellers of the Decameron, and the lines between them show themes that are shared between them.</p>
+        <div style="margin-top:20px;">
+            <p>The colors of nodes represent the storytellers of the Decameron, and the lines between them show themes that are shared between them.</p>
             <p>Storyteller color key:</p>
             <b style="border-right:18px solid #9e0142; margin-left: 50px"></b>Panfilo
             <b style="border-right:18px solid #d53e4f;"></b>Neifile
@@ -100,7 +104,7 @@
             <b style="border-right:18px solid #66c2a5;"></b>Lauretta
             <b style="border-right:18px solid #3288bd;"></b>Elissa
             <b style="border-right:18px solid #5e4fa2;"></b>Pampinea
-            
+            <p></p>
             <p>Theme color key:</p>
             <b style="border-right:18px solid green; margin-left: 50px"></b>Priests Gone Wild
             <b style="border-right:18px solid blue;"></b>Storytelling
@@ -108,9 +112,9 @@
             <b style="border-right:18px solid rgb(255, 0, 187);"></b>Queerness
             <b style="border-right:18px solid red;"></b>Gender and Power Dynamics
             <b style="border-right:18px solid orange;"></b>Cultural Exchange
+            <p></p>
 
-
-            <p>Click on nodes for links to the stories!</p>
+            <p>Click on nodes for links to the stories! Explanation below graph.</p>
         </div>
 
         <div class="card" style="width: 100%">
@@ -187,7 +191,7 @@
           "centralGravity": 0.3,
           "damping": 0.09,
           "gravitationalConstant": -80000,
-          "springConstant": 0.15,
+          "springConstant": 0.13,
           "springLength": 1
       },
       "enabled": true,
@@ -284,6 +288,17 @@
             }
             drawGraph();
       </script>
+      <p style="margin-top:20px">In the Decameron, themes are revisited over and over again, often in contradictory (and interesting) ways. To help visualize this, I made a graph of the stories of the Decameron, with nodes connecting stories that had similar themes, as identified by myself. Because I don’t have too much space here, I’ll focus on a few of them:
+    </p>
+    <ul>
+        <li><b class="notkey">Religious Critique</b> - I chose this as a theme because there are many examples within the Decameron of critiquing the church, but many times this critique is done through religious figures having a lot of sex, going against the principles they preach. Examples of these are Day 3, Story 1 with nuns taking advantage of someone they deem to be deaf and mute, or Day 3, Story 10 with Alibech and Rustico. I also included some stories that didn’t include the sex element as well, such as the first story. 
+        </li>
+        <li><b class="notkey">Storytelling</b> - Another popular theme in the Decameron is the power of storytelling. This begins with a frame tale about providing solace through stories, and many of the tales engage directly by showing the power of storytelling to create change. For example, the first story sets up how someone who has sinned all their life can become a reputed saint simply by telling a story. 
+        </li>
+        <li>
+            <b class="notkey">Gender and Power</b> - Throughout the Decameron, Boccacio plays with the idea of who has power. Many of the women in the text are able to exert their power linguistically, through wit or retort. For example, Day 1, Story 5, with the Marchioness.
+        </li>
+      </ul>
       </div>
   </body>
 </html>
